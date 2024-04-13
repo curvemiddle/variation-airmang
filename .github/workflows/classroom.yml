@@ -1,0 +1,33 @@
+name: Autograding Tests
+'on':
+- push
+- workflow_dispatch
+- repository_dispatch
+permissions:
+  checks: write
+  actions: read
+  contents: read
+jobs:
+  run-autograding-tests:
+    runs-on: ubuntu-latest
+    if: github.actor != 'github-classroom[bot]'
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    - name: variation1
+      id: variation1
+      uses: education/autograding-io-grader@v1
+      with:
+        test-name: variation1
+        setup-command: ''
+        command: "./variation1.py"
+        input: ''
+        expected-output: '252500'
+        comparison-method: exact
+        timeout: 10
+    - name: Autograding Reporter
+      uses: education/autograding-grading-reporter@v1
+      env:
+        VARIATION1_RESULTS: "${{steps.variation1.outputs.result}}"
+      with:
+        runners: variation1
