@@ -20,11 +20,12 @@ jobs:
       with:
         test-name: variation1
         setup-command: ''
-        command: "./variation1.py"
+        command: python variation1.py
         input: ''
         expected-output: '252500'
         comparison-method: exact
         timeout: 10
+        max-score: 10
     - name: Autograding Reporter
       uses: education/autograding-grading-reporter@v1
       env:
